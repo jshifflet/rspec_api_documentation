@@ -117,6 +117,7 @@ describe RspecApiDocumentation::RackTestClient do
         metadata[:response_headers]['Content-Length'].should == '17'
         metadata[:response_content_type].should match(/application\/json/)
         metadata[:curl].should eq(RspecApiDocumentation::Curl.new("POST", "/greet?query=test+query", post_data, {"Content-Type" => "application/json;charset=utf-8", "X-Custom-Header" => "custom header value", "Host" => "example.org", "Cookie" => ""}))
+        metadata[:call_stack].should be_present
       end
 
       context "when post data is not json" do

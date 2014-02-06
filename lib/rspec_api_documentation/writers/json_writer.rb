@@ -16,7 +16,7 @@ module RspecApiDocumentation
         index.examples.each do |example|
           json_example = JsonExample.new(example, configuration)
           FileUtils.mkdir_p(docs_dir.join(json_example.dirname))
-          File.open(docs_dir.join(json_example.dirname, json_example.filename), "w+") do |f|
+          File.open(docs_dir.join(json_example.dirname, json_example.filename), "w+") do |f| 
             f.write Formatter.to_json(json_example)
           end
         end
@@ -90,8 +90,8 @@ module RspecApiDocumentation
           :description => description,
           :explanation => explanation,
           :parameters => respond_to?(:parameters) ? parameters : [],
-          :requests => requests
-        }
+          :requests => requests,
+         }
       end
 
       def requests

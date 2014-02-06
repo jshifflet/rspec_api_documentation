@@ -1,10 +1,10 @@
 module RspecApiDocumentation
   class ClientBase < Struct.new(:context, :options)
-    include Headers
+    include Headers 
 
     delegate :example, :app, :to => :context
-    delegate :metadata, :to => :example
-
+    delegate :metadata, :to => :example 
+  
     def get(*args)
       process :get, *args
     end
@@ -34,10 +34,18 @@ module RspecApiDocumentation
     end
 
     private
-
-    def process(method, path, params = {}, headers ={})
-      do_request(method, path, params, headers)
-      document_example(method.to_s.upcase, path)
+ 
+    def process(method, path, params = {}, headers ={}) 
+      @call_stack_array = []
+      traceCall = TracePoint.new(:call, :return) do |tp|
+        unless tp.defined_class =~ /rspec/ 
+          @call_stack_array << tp.defined_class
+        end
+      end.enable do
+        do_request(method, path, params, headers) 
+      end
+@call_stack = ['test']
+      document_example(method.to_s.upcase, path) 
     end
 
     def document_example(method, path)
@@ -64,8 +72,8 @@ module RspecApiDocumentation
       request_metadata[:response_body] = response_body.empty? ? nil : response_body
       request_metadata[:response_headers] = response_headers
       request_metadata[:response_content_type] = response_content_type
-      request_metadata[:curl] = Curl.new(method, path, request_body, request_headers)
-
+      request_metadata[:curl] = Curl.new(method, path, request_body, request_headers) 
+      request_metadata[:call_stack] = @call_stack_array.inspect
       metadata[:requests] ||= []
       metadata[:requests] << request_metadata
     end
@@ -81,6 +89,6 @@ module RspecApiDocumentation
 
     def headers(method, path, params, request_headers)
       request_headers || {}
-    end
-  end
+    end 
+  end 
 end

@@ -2,7 +2,7 @@ module RspecApiDocumentation
   class RackTestClient < ClientBase
 
     delegate :last_request, :last_response, :to => :rack_test_session
-    private :last_request, :last_response
+    private :last_request, :last_response 
 
     def request_headers
       env_to_headers(last_request.env)
@@ -30,12 +30,13 @@ module RspecApiDocumentation
 
     def response_content_type
       last_response.content_type
-    end
+    end 
 
     protected
 
-    def do_request(method, path, params, request_headers)
-      rack_test_session.send(method, path, params, headers(method, path, params, request_headers))
+
+    def do_request(method, path, params, request_headers) 
+      rack_test_session.send(method, path, params, headers(method, path, params, request_headers)) 
     end
 
     def headers(*args)
@@ -76,6 +77,6 @@ module RspecApiDocumentation
           raise "#{self.class.name} requires Rack::Test >= 0.5.5. Please add it to your test dependencies."
         end
       end.new(app)
-    end
+    end 
   end
 end

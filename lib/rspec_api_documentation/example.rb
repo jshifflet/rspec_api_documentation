@@ -44,6 +44,6 @@ module RspecApiDocumentation
 
     def requests
       metadata[:requests] || []
-    end
+    end 
   end
 end

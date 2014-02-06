@@ -31,7 +31,7 @@ module RspecApiDocumentation
         IndexHelper.sections(examples, @configuration)
       end
 
-      def examples
+      def examples 
         @index.examples.map { |example| JsonExample.new(example, @configuration) }
       end
 
@@ -73,13 +73,13 @@ module RspecApiDocumentation
       end
 
       def as_json(opts = nil)
-         {
+        {
           :MethodName => description,
           :Synopsis => explanation,
           :HTTPMethod => http_method,
           :URI => (requests.first[:request_path] rescue ""),
           :RequiresOAuth => "N",
-          :parameters => parameters
+          :parameters => parameters, 
         }
       end
     end
@@ -96,7 +96,7 @@ module RspecApiDocumentation
             :name => @configuration.api_name,
             :protocol => @configuration.io_docs_protocol,
             :publicPath => "",
-            :baseURL => @configuration.curl_host
+            :baseURL => @configuration.curl_host, 
           }
         }
       end
