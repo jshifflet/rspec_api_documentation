@@ -44,7 +44,7 @@ module RspecApiDocumentation
       end.enable do
         do_request(method, path, params, headers) 
       end
-@call_stack = ['test']
+
       document_example(method.to_s.upcase, path) 
     end
 
